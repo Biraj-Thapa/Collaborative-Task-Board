@@ -6,6 +6,7 @@ const saltRounds = 10;
 export const registerUser = async (req, res) => {
   try {
     const { fullName, email, password } = req.body;
+    const avatar = req.file?.path 
     let existUser = await User.findOne({ email: email });
     if (existUser) {
      return res.status(400).json({ message: "User already exist" });
@@ -16,6 +17,7 @@ export const registerUser = async (req, res) => {
       fullName,
       email,
       password: encryptedPassword,
+      avatar
     });
     let token = generateToken(user._id);
 
@@ -25,7 +27,7 @@ export const registerUser = async (req, res) => {
       sameSite: "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    return res.status(201).json({ user: { fullName, email } });
+    return res.status(201).json({ user: { fullName, email,avatar } });
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
