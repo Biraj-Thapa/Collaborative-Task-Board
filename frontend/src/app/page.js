@@ -1,9 +1,5 @@
-import React from 'react'
+import { redirect } from "next/navigation";
 
-const page = () => {
-  return (
-    <div className='bg-amber-500'>page</div>
-  )
+export default function RootPage() {
+  redirect("/register");
 }
-
-export default page
